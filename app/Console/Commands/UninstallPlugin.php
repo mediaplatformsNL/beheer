@@ -25,6 +25,9 @@ class UninstallPlugin extends Command
         $this->rollbackMigrations($pluginName, $pluginPath);
         $this->unregisterInConfig($pluginName);
 
+        // Reset API configuratie
+        $this->resetApiConfig($pluginName, $pluginPath);
+
         // Leeg de configuratiecache
         Artisan::call('config:cache');
         $this->info("Configuratiecache geleegd.");
@@ -87,5 +90,33 @@ class UninstallPlugin extends Command
         } else {
             $this->warn("Plugin {$pluginName} was niet geregistreerd in plugins.php.");
         }
+    }
+
+    protected function resetApiConfig($pluginName, $pluginPath)
+    {
+        $configPath = "{$pluginPath}/config.php";
+
+        if (!File::exists($configPath)) {
+            $this->error("Configbestand voor plugin {$pluginName} bestaat niet.");
+            return;
+        }
+
+        $configContent = File::get($configPath);
+
+        // Vervang de 'has_api' en 'api_key' waarden
+        $newConfigContent = preg_replace(
+            [
+                "/'has_api' => true,/",
+                "/'api_key' => '.*',/"
+            ],
+            [
+                "'has_api' => false,",
+                "'api_key' => '',"
+            ],
+            $configContent
+        );
+
+        File::put($configPath, $newConfigContent);
+        $this->info("API configuratie gereset voor plugin {$pluginName}.");
     }
 } 
