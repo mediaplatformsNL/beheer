@@ -1,0 +1,219 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.card {
+    overflow: hidden;
+}
+
+.modal {
+    opacity: 1 !important;
+}
+
+.makelaar-container {
+    display: flex;
+    min-height: 100vh;
+
+    .sidebar {
+        width: 280px;
+        max-width: 280px;
+        background-color: white;
+        border-right: 1px solid #f1f1f4;
+        flex-shrink: 0;
+
+        .logo {
+            padding: 15px;
+
+            img {
+                max-width: 200px;
+            }
+        }
+
+        .sidebar-menu {
+            padding: 30px 15px 15px;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    padding: 6px 10px;
+
+                    a {
+                        font-weight: 500;
+                        display: flex;
+                        text-decoration: none;
+
+                        .menu-item-icon {
+                            width: 20px;
+
+                            i {
+                                color: #99a1b7;
+                            }
+                        }
+
+                        .menu-item-text {
+                            display: flex;
+                            align-items: center;
+                            flex-grow: 1;
+                            color: #252f4a;
+                            padding-left: 10px;
+                        }
+
+                        &:hover {
+                            .menu-item-text {
+                                color: #1b84ff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .main-content {
+        flex: 1;
+        background-color: #fefefe;
+
+        .header {
+            height: 70px;
+            width: 100%;
+
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                border: 2px solid #6515a9;
+                margin: 15px 0;
+            }
+        }
+    }
+}
+
+// Reset default body margin and padding
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header-text {
+    line-height: 70px;
+    color: #4b5675;
+}
+
+.tooltip-custom {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+    z-index: 1070;
+    padding: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    background-color: white;
+    border: 4px solid #6515a9;
+    border-radius: 5px;
+}
+
+.tooltip-custom img {
+    display: block;
+}
+
+.img-static {
+    max-width: unset;
+}
+
+#requests-table {
+    .map-preview-row {
+        font-weight: 400;
+
+        td {
+            background: rgba(255, 255, 255, 1);
+            transition: background 0.3s ease-in-out;
+        }
+
+        // button {
+        //     opacity: 0;
+        //     transition: opacity 0.3s ease;
+        // }
+
+        &:hover {
+            td {
+                background: rgba(0, 0, 0, 0.03);
+            }
+        }
+    }
+}
+
+.streetview-container {
+    cursor: pointer;
+}
+
+.streetview-map {
+    width: 100%;
+    height: 500px;
+}
+
+.streetview-image:hover {
+    opacity: 0.9;
+}
+
+.modal.show .modal-dialog {
+    max-width: unset;
+    height: calc(100vh - 60px);
+}
+
+.table {
+    thead {
+        th {
+            font-weight: 700 !important;
+
+            &:first-child {
+                padding-left: 1.5rem !important;
+            }
+        
+            &:last-child {
+                padding-right: 1.5rem !important;
+            }
+        }
+    }
+
+    tbody {
+        td {
+            line-height: 30px;
+
+            &:first-child {
+                padding-left: 1.5rem !important;
+            }
+
+            &:last-child {
+                padding-right: 1.5rem !important;
+            }
+
+            .btn.btn-icon {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+.logout-form {
+    .menu-link {
+        font-weight: 500;
+        border: none;
+        background: none;
+
+        &:hover {
+            color: #1b84ff;
+        }
+    }
+}
+
+.app-sidebar {
+    .menu {
+        .menu-arrow {
+            display: flex !important;
+        }
+    }
+}
