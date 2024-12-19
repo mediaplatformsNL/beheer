@@ -108,11 +108,9 @@ class UninstallPlugin extends Command
         // Vervang de 'has_api' en 'api_key' waarden
         $newConfigContent = preg_replace(
             [
-                "/'has_api' => true,/",
                 "/'api_key' => '.*',/"
             ],
             [
-                "'has_api' => false,",
                 "'api_key' => '',"
             ],
             $configContent

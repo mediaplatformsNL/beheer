@@ -68,7 +68,6 @@ class InstallPlugin extends Command
         }
     }
 
-
     protected function runMigrations($pluginName, $pluginPath)
     {
         $migrationPath = "{$pluginPath}/migrations";
@@ -126,8 +125,7 @@ class InstallPlugin extends Command
 
         if (isset($configArray['has_api']) && $configArray['has_api'] === true) {
             $apiKey = Str::random(60);
-            $newConfigContent = str_replace(
-                "'api_key' => null,",
+            $newConfigContent = preg_replace(
                 "'api_key' => '{$apiKey}',",
                 $configContent
             );
