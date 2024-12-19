@@ -31,6 +31,8 @@ class InstallPlugin extends Command
 
         // Leeg de configuratiecache
         Artisan::call('config:cache');
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
         $this->info("Configuratiecache geleegd.");
     }
 
