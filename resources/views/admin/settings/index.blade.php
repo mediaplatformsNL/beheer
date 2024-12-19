@@ -217,7 +217,7 @@
         const button = document.querySelector(`button[data-plugin="${pluginName}"]`);
         toggleLoading(button, true);
 
-        fetch(`/admin/plugins/install/${pluginName}`, {
+        fetch(`/plugins/install/${pluginName}`, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
@@ -244,7 +244,7 @@
         const button = document.querySelector(`button[data-plugin="${pluginName}"]`);
         toggleLoading(button, true);
 
-        fetch(`/admin/plugins/uninstall/${pluginName}`, {
+        fetch(`/plugins/uninstall/${pluginName}`, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
