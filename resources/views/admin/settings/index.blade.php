@@ -135,7 +135,7 @@
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 saveSettings(form, originalValues);
-            }, 500);
+            }, 1000);
         });
     });
 
