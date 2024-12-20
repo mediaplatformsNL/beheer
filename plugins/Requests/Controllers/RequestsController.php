@@ -85,7 +85,8 @@ class RequestsController extends Controller
         $customQuestionsArray = explode("\n", $customQuestionsSetting->value);
         $customQuestionsSettings = [];
         foreach ($customQuestionsArray as $customQuestion) {
-            $decodedQuestion = json_decode($customQuestion, true);
+            $cleanedQuestion = str_replace('\"', '"', $customQuestion); // Verwijder escape-tekens
+            $decodedQuestion = json_decode($cleanedQuestion, true);
             if ($decodedQuestion) {
                 $customQuestionsSettings[] = $decodedQuestion;
             }
