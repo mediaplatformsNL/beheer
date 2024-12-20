@@ -21,6 +21,20 @@
             @method('PUT')
 
             <div class="mb-3">
+                <label class="form-label">Geslacht</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-input-sm" type="radio" name="gender" id="gender_male" value="Dhr." {{ old('gender', $requestModel->gender) == 'Dhr.' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="gender_male">Dhr.</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-input-sm" type="radio" name="gender" id="gender_female" value="Mevr." {{ old('gender', $requestModel->gender) == 'Mevr.' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="gender_female">Mevr.</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
                 <label for="name" class="form-label">Naam</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ old('name', $requestModel->name) }}">
             </div>
@@ -37,7 +51,7 @@
 
             <!-- Voeg hier meer velden toe indien nodig -->
 
-            <div class="mt-3">
+            <div class="mt-7">
                 <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
                 <a href="{{ route('requests.index') }}" class="btn btn-secondary btn-sm ms-2">Terug naar overzicht</a>
             </div>
