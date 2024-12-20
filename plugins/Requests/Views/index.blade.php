@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{ $request->request_number }}</td>
                             <td>{{ $request->created_at->format('d-m-Y') }}</td>
-                            <td>{{ $request->first_name }} {{ $request->last_name }}</td>
+                            <td>{{ $request->name ?? $request->first_name . ' ' . $request->last_name }}</td>
                             <td>{{ $request->city }}</td>
                             <td>{{ $request->email }}</td>
                             <td>{{ !empty($request->phone) ? $request->phone : '--' }}</td>
