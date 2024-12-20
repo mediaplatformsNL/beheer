@@ -78,7 +78,10 @@ class RequestsController extends Controller
     }
 
     public function edit(RequestModel $requestModel) {
-        return view('requests::edit', compact('requestModel'));
+        $customQuestionsSetting = Setting::where('name', 'custom_questions')->first();
+        $customQuestionsSettings = $customQuestionsSetting ? json_decode($customQuestionsSetting->value, true) : [];
+
+        return view('requests::edit', compact('requestModel', 'customQuestionsSettings'));
     }
 
     public function update(Request $request, RequestModel $requestModel) {

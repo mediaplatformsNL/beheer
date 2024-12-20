@@ -50,44 +50,19 @@
             </div>
 
             <!-- Loop door custom_questions -->
-            @if($customQuestions = json_decode($requestModel->custom_questions, true))
-                @php
-                    $questionConfig = json_decode(Settings::where('name', 'custom_questions')->first()->value ?? '{}', true);
-                @endphp
-                @foreach($customQuestions as $question => $data)
-                    @php
-                        $decodedQuestion = urldecode($question);
-                        $cleanQuestion = str_replace('"', '', $decodedQuestion);
-                        $type = $data['type'];
-                        $answer = $data['answer'];
-                    @endphp
-                    <div class="mb-5">
-                        <label class="form-label">{{ $cleanQuestion }}</label>
-                        
-                        @switch($type)
-                            @case('radio')
-                                <div>
-                                    @if(isset($questionConfig['radio'][$cleanQuestion]))
-                                        @foreach($questionConfig['radio'][$cleanQuestion] as $option => $label)
-                                            <div class="form-check form-check-inline form-check-sm">
-                                                <input class="form-check-input" type="radio" 
-                                                    name="custom_questions[{{ $cleanQuestion }}][{{ $type }}]" 
-                                                    id="{{ $cleanQuestion }}_{{ $option }}"
-                                                    value="{{ $option }}"
-                                                    {{ $answer == $option ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $label }}</label>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                @break
-
-                            @default
-                                <input type="text" class="form-control form-control-sm" 
-                                    name="custom_questions[{{ $cleanQuestion }}][{{ $type }}]" 
-                                    value="{{ $answer }}">
-                        @endswitch
-                    </div>
+            @if($customQuestionsSettings)
+                @foreach($customQuestionsSettings as $question => $data)
+                <div class="mb-5">
+                    <label class="form-label">{{ $question }}</label>
+                    @if($data['type'] == 'radio')
+                        @foreach($data['answer'] as $option => $value)
+                            <div class="form-check form-check-inline form-check-sm">
+                                <input class="form-check-input" type="radio" name="custom_questions[{{ $question }}]" id="custom_question_{{ $question }}_{{ $option }}" value="{{ $option }}" {{ old('custom_questions.' . $question, $requestModel->custom_questions[$question]['answer']) == $option ? 'checked' : '' }}>
+                                <label class="form-check-label" for="custom_question_{{ $question }}_{{ $option }}">{{ $value }}</label>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
                 @endforeach
             @endif
 
