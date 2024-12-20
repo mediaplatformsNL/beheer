@@ -62,7 +62,7 @@
                     <div class="mb-5">
                         <label class="form-label">{{ $cleanQuestion }}</label>
                         
-                        @switch($data['type'])
+                        @switch($cleanType)
                             @case('radio')
                                 <div>
                                     @foreach(explode(',', $data['options'] ?? '') as $option)
