@@ -81,18 +81,25 @@ class RequestsController extends Controller
     }
 
     public function edit(RequestModel $requestModel) {
+        // Verwijder escape-tekens uit de custom_questions van $requestModel
+        if (!empty($requestModel->custom_questions)) {
+            $cleanedCustomQuestions = str_replace('\"', '', $requestModel->custom_questions);
+            $requestModel->custom_questions = $cleanedCustomQuestions;
+            $requestModel->save();
+            $requestModel->refresh();
+        }
+
         $customQuestionsSetting = Setting::where('name', 'custom_questions')->first();
         $customQuestionsArray = explode("\n", $customQuestionsSetting->value);
         $customQuestionsSettings = [];
         foreach ($customQuestionsArray as $customQuestion) {
             $decodedQuestion = json_decode($customQuestion, true);
-            $cleanedQuestion = str_replace('\"', '"', $decodedQuestion); // Verwijder escape-tekens
-            if ($cleanedQuestion) {
-                $customQuestionsSettings[] = $cleanedQuestion;
+            if ($decodedQuestion) {
+                $customQuestionsSettings[] = $decodedQuestion;
             }
         }
 
-        dd($requestModel);
+        // dd($requestModel);
         return view('requests::edit', compact('requestModel', 'customQuestionsSettings'));
     }
 
