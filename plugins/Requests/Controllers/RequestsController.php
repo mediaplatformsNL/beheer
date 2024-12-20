@@ -43,8 +43,21 @@ class RequestsController extends Controller
             $request->merge(['name' => trim($request->first_name . ' ' . $request->last_name)]);
         }
 
+        // Verwerk custom_questions om de nieuwe structuur te maken
+        $processedQuestions = [];
+        if ($request->has('custom_questions')) {
+            foreach ($request->custom_questions as $question => $data) {
+                foreach ($data as $type => $answer) {
+                    $processedQuestions[$question] = [
+                        'type' => $type,
+                        'answer' => $answer
+                    ];
+                }
+            }
+        }
+
         // Zet custom_questions om naar een JSON-string
-        $request->merge(['custom_questions' => json_encode($request->custom_questions)]);
+        $request->merge(['custom_questions' => json_encode($processedQuestions)]);
 
         // Haal het huidige request_number op
         $requestNumberSetting = Setting::where('name', 'request_number')->first();
