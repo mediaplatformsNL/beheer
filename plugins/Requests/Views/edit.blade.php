@@ -22,22 +22,23 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Naam</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $requestModel->name) }}">
+                <input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ old('name', $requestModel->name) }}">
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $requestModel->email) }}">
+                <input type="email" class="form-control form-control-sm" id="email" name="email" value="{{ old('email', $requestModel->email) }}">
             </div>
 
             <div class="mb-3">
                 <label for="city" class="form-label">Plaats</label>
-                <input type="text" class="form-control" id="city" name="city" value="{{ old('city', $requestModel->city) }}">
+                <input type="text" class="form-control form-control-sm" id="city" name="city" value="{{ old('city', $requestModel->city) }}">
             </div>
 
             <!-- Voeg hier meer velden toe indien nodig -->
 
-            <button type="submit" class="btn btn-primary">Opslaan</button>
+            <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
+            <a href="{{ route('requests.index') }}" class="btn btn-secondary btn-sm">Terug naar overzicht</a>
         </form>
     </div>
 </div>

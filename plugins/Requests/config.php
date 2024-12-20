@@ -30,5 +30,5 @@ return [
         ],
     ],
     'has_api' => true,
-    'api_key' => 'hIyindLKKV4GirPUsHzeDEUgldOWyYjXlUhiIhNI0LJJD5AYl2LZEldVn7B5',
+    'api_key' => '0pdTK99UvaGrGnXI28yLIjjSBllUAp0sLnCtsBxehBxs6PKjrO0oDAiI50L8',
 ];
