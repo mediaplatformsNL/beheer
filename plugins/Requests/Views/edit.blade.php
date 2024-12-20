@@ -37,8 +37,10 @@
 
             <!-- Voeg hier meer velden toe indien nodig -->
 
-            <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
-            <a href="{{ route('requests.index') }}" class="btn btn-secondary btn-sm">Terug naar overzicht</a>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
+                <a href="{{ route('requests.index') }}" class="btn btn-secondary btn-sm ms-2">Terug naar overzicht</a>
+            </div>
         </form>
     </div>
 </div>
