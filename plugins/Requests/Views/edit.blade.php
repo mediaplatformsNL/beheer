@@ -48,6 +48,11 @@
                         </div>
 
                         <div class="mb-5">
+                            <label for="phone" class="form-label">Telefoon</label>
+                            <input type="text" class="form-control form-control-sm" id="phone" name="phone" value="{{ old('phone', $requestModel->phone) }}">
+                        </div>
+
+                        <div class="mb-5">
                             <label for="city" class="form-label">Plaats</label>
                             <input type="text" class="form-control form-control-sm" id="city" name="city" value="{{ old('city', $requestModel->city) }}">
                         </div>
