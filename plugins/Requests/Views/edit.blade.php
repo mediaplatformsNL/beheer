@@ -52,9 +52,13 @@
             <!-- Loop door custom_questions -->
             @if($customQuestions = json_decode($requestModel->custom_questions, true))
                 @foreach($customQuestions as $question => $answer)
+                    @php
+                        $decodedQuestion = urldecode($question);
+                        $cleanQuestion = str_replace('"', '', $decodedQuestion);
+                    @endphp
                     <div class="mb-5">
-                        <label class="form-label">{{ urldecode($question) }}</label>
-                        <input type="text" class="form-control form-control-sm" name='custom_questions["{{ urldecode($question) }}"]' value="{{ old('custom_questions.' . urldecode($question), $answer) }}">
+                        <label class="form-label">{{ $cleanQuestion }}</label>
+                        <input type="text" class="form-control form-control-sm" name='custom_questions["{{ $cleanQuestion }}"]' value="{{ old('custom_questions.' . $cleanQuestion, $answer) }}">
                     </div>
                 @endforeach
             @endif
