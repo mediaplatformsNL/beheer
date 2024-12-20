@@ -25,8 +25,10 @@ class ValidateApiKeyAndDomain
 
         // Controleer het domein
         $origin = $request->headers->get('Origin');
-        Log::info('Origin: ' . $origin);
-        if (!in_array($origin, $allowedDomains)) {
+        $originHost = parse_url($origin, PHP_URL_HOST);
+        Log::info('Origin Host: ' . $originHost);
+
+        if (!in_array($originHost, $allowedDomains)) {
             return response()->json(['error' => 'Unauthorized domain'], 403);
         }
 
