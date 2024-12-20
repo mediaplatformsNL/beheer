@@ -51,14 +51,63 @@
 
             <!-- Loop door custom_questions -->
             @if($customQuestions = json_decode($requestModel->custom_questions, true))
-                @foreach($customQuestions as $question => $answer)
+                @foreach($customQuestions as $question => $data)
                     @php
                         $decodedQuestion = urldecode($question);
                         $cleanQuestion = str_replace('"', '', $decodedQuestion);
                     @endphp
                     <div class="mb-5">
                         <label class="form-label">{{ $cleanQuestion }}</label>
-                        <input type="text" class="form-control form-control-sm" name='custom_questions["{{ $cleanQuestion }}"]' value="{{ old('custom_questions.' . $cleanQuestion, $answer) }}">
+                        
+                        @switch($data['type'])
+                            @case('radio')
+                                <div>
+                                    @foreach(explode(',', $data['options'] ?? '') as $option)
+                                        <div class="form-check form-check-inline form-check-sm">
+                                            <input class="form-check-input" type="radio" 
+                                                name="custom_questions[{{ $cleanQuestion }}][{{ $data['type'] }}]" 
+                                                id="{{ $cleanQuestion }}_{{ $option }}"
+                                                value="{{ $option }}"
+                                                {{ old('custom_questions.' . $cleanQuestion . '.' . $data['type'], $data['answer']) == $option ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $option }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @break
+
+                            @case('select')
+                                <select class="form-select form-select-sm" 
+                                    name="custom_questions[{{ $cleanQuestion }}][{{ $data['type'] }}]">
+                                    <option value="">Maak een keuze</option>
+                                    @foreach(explode(',', $data['options'] ?? '') as $option)
+                                        <option value="{{ $option }}"
+                                            {{ old('custom_questions.' . $cleanQuestion . '.' . $data['type'], $data['answer']) == $option ? 'selected' : '' }}>
+                                            {{ $option }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @break
+
+                            @case('checkbox')
+                                <div>
+                                    @foreach(explode(',', $data['options'] ?? '') as $option)
+                                        <div class="form-check form-check-sm">
+                                            <input class="form-check-input" type="checkbox" 
+                                                name="custom_questions[{{ $cleanQuestion }}][{{ $data['type'] }}][]" 
+                                                id="{{ $cleanQuestion }}_{{ $option }}"
+                                                value="{{ $option }}"
+                                                {{ in_array($option, explode(',', old('custom_questions.' . $cleanQuestion . '.' . $data['type'], $data['answer']))) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $option }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @break
+
+                            @default
+                                <input type="text" class="form-control form-control-sm" 
+                                    name="custom_questions[{{ $cleanQuestion }}][{{ $data['type'] }}]" 
+                                    value="{{ old('custom_questions.' . $cleanQuestion . '.' . $data['type'], $data['answer']) }}">
+                        @endswitch
                     </div>
                 @endforeach
             @endif
