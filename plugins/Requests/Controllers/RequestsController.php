@@ -69,6 +69,13 @@ class RequestsController extends Controller
     }
 
     public function update(Request $request, RequestModel $requestModel) {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'city' => 'nullable|string',
+            // Voeg hier meer validatieregels toe indien nodig
+        ]);
+
         $requestModel->update($request->all());
         return redirect()->route('requests.index')->with('success', 'Request ' . $requestModel->request_number . ' is succesvol bijgewerkt');
     }

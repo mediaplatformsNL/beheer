@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('request_number', 10);
-            $table->string('status', 20)->default('Nieuw');
+            $table->string('status', 20)->default('Onbevestigd');
             $table->string('gender', 10)->nullable();
             $table->string('name', 100)->nullable();
             $table->string('first_name', 100)->nullable();

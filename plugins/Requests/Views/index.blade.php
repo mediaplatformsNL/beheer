@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     @foreach ($requests as $request)
-                        <tr>
+                        <tr onclick="window.location='{{ route('requests.edit', $request->id) }}'" style="cursor: pointer;">
                             <td>{{ $request->request_number }}</td>
                             <td>{{ $request->created_at->format('d-m-Y') }}</td>
                             <td>{{ $request->name ?? $request->first_name . ' ' . $request->last_name }}</td>
