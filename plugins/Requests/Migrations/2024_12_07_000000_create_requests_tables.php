@@ -12,15 +12,15 @@ return new class extends Migration
             $table->id();
             $table->string('request_number', 10);
             $table->string('status', 20)->default('Nieuw');
-            $table->string('gender', 10);
+            $table->string('gender', 10)->nullable();
             $table->string('name', 100)->nullable();
             $table->string('first_name', 100)->nullable();
             $table->string('last_name', 100)->nullable();
-            $table->string('street', 100);
-            $table->string('house_number', 10);
+            $table->string('street', 100)->nullable();
+            $table->string('house_number', 10)->nullable();
             $table->string('addition', 10)->nullable();
-            $table->string('postal_code', 6);
-            $table->string('city', 100);
+            $table->string('postal_code', 6)->nullable();
+            $table->string('city', 100)->nullable();
             $table->string('email', 100);
             $table->string('phone', 20)->nullable();
             $table->json('custom_questions')->nullable(); // Voor de flexibele vragen
