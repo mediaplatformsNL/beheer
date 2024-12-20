@@ -53,8 +53,8 @@
             @if($customQuestions = json_decode($requestModel->custom_questions, true))
                 @foreach($customQuestions as $question => $answer)
                     <div class="mb-5">
-                        <label class="form-label">{{ $question }}</label>
-                        <input type="text" class="form-control form-control-sm" name="custom_questions[{{ $question }}]" value="{{ old('custom_questions.' . $question, $answer) }}">
+                        <label class="form-label">{!! $question !!}</label>
+                        <input type="text" class="form-control form-control-sm" name="custom_questions[{!! $question !!}]" value="{{ old('custom_questions.' . $question, $answer) }}">
                     </div>
                 @endforeach
             @endif
