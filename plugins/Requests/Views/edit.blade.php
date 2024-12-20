@@ -51,69 +51,41 @@
 
             <!-- Loop door custom_questions -->
             @if($customQuestions = json_decode($requestModel->custom_questions, true))
+                @php
+                    $questionConfig = json_decode(Settings::where('name', 'custom_questions')->first()->value ?? '{}', true);
+                @endphp
                 @foreach($customQuestions as $question => $data)
                     @php
                         $decodedQuestion = urldecode($question);
                         $cleanQuestion = str_replace('"', '', $decodedQuestion);
-
-                        $decodedType = urldecode($data['type']);
-                        $cleanType = str_replace('"', '', $decodedType);
+                        $type = $data['type'];
+                        $answer = $data['answer'];
                     @endphp
                     <div class="mb-5">
                         <label class="form-label">{{ $cleanQuestion }}</label>
                         
-                        @switch($cleanType)
+                        @switch($type)
                             @case('radio')
                                 <div>
-                                    @foreach(explode(',', $data['options'] ?? '') as $option)
-                                        <div class="form-check form-check-inline form-check-sm">
-                                            <input class="form-check-input" type="radio" 
-                                                name="custom_questions[{{ $cleanQuestion }}][{{ $cleanType }}]" 
-                                                id="{{ $cleanQuestion }}_{{ $option }}"
-                                                value="{{ $option }}"
-                                                {{ old('custom_questions.' . $cleanQuestion . '.' . $cleanType, $data['answer']) == $option ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $option }}</label>
-                                        </div>
-                                    @endforeach
+                                    @if(isset($questionConfig['radio'][$cleanQuestion]))
+                                        @foreach($questionConfig['radio'][$cleanQuestion] as $option => $label)
+                                            <div class="form-check form-check-inline form-check-sm">
+                                                <input class="form-check-input" type="radio" 
+                                                    name="custom_questions[{{ $cleanQuestion }}][{{ $type }}]" 
+                                                    id="{{ $cleanQuestion }}_{{ $option }}"
+                                                    value="{{ $option }}"
+                                                    {{ $answer == $option ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $label }}</label>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
-                                @break
-
-                            @case('select')
-                                <select class="form-select form-select-sm" 
-                                    name="custom_questions[{{ $cleanQuestion }}][{{ $cleanType }}]">
-                                    <option value="">Maak een keuze</option>
-                                    @foreach(explode(',', $data['options'] ?? '') as $option)
-                                        <option value="{{ $option }}"
-                                            {{ old('custom_questions.' . $cleanQuestion . '.' . $cleanType, $data['answer']) == $option ? 'selected' : '' }}>
-                                            {{ $option }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @break
-
-                            @case('checkbox')
-                                <div>
-                                    @foreach(explode(',', $data['options'] ?? '') as $option)
-                                        <div class="form-check form-check-sm">
-                                            <input class="form-check-input" type="checkbox" 
-                                                name="custom_questions[{{ $cleanQuestion }}][{{ $cleanType }}][]" 
-                                                id="{{ $cleanQuestion }}_{{ $option }}"
-                                                value="{{ $option }}"
-                                                {{ in_array($option, explode(',', old('custom_questions.' . $cleanQuestion . '.' . $cleanType, $data['answer']))) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="{{ $cleanQuestion }}_{{ $option }}">{{ $option }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @break
-
-                            @case('textarea')
-                                <textarea class="form-control form-control-sm" name="custom_questions[{{ $cleanQuestion }}][{{ $cleanType }}]">{{ old('custom_questions.' . $cleanQuestion . '.' . $cleanType, $data['answer']) }}</textarea>
                                 @break
 
                             @default
                                 <input type="text" class="form-control form-control-sm" 
-                                    name="custom_questions[{{ $cleanQuestion }}][{{ $cleanType }}]" 
-                                    value="{{ old('custom_questions.' . $cleanQuestion . '.' . $cleanType, $data['answer']) }}">
+                                    name="custom_questions[{{ $cleanQuestion }}][{{ $type }}]" 
+                                    value="{{ $answer }}">
                         @endswitch
                     </div>
                 @endforeach

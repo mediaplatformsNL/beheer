@@ -26,15 +26,12 @@
                     @php
                         $pluginConfigPath = $plugin . '/config.php';
                         $pluginConfig = File::exists($pluginConfigPath) ? include($pluginConfigPath) : null;
-                        $pluginSettings = $pluginConfig['settings'] ?? [];
                         $pluginEnabled = config('plugins.enabled.' . basename($plugin)) ?? false;
                     @endphp
-                    @if($pluginEnabled)
-                        @foreach($pluginSettings as $key => $setting)
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_{{ Str::slug($pluginConfig['name']) }}" data-title="{{ $pluginConfig['name'] }}">{{ $pluginConfig['name'] }}</a>
-                            </li>
-                        @endforeach
+                    @if($pluginEnabled && !empty($pluginConfig['settings']))
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_{{ Str::slug($pluginConfig['name']) }}" data-title="{{ $pluginConfig['name'] }}">{{ $pluginConfig['name'] }}</a>
+                        </li>
                     @endif
                 @endforeach
                 <li class="nav-item">
@@ -63,7 +60,7 @@
                     $pluginSettings = $pluginConfig['settings'] ?? [];
                     $pluginEnabled = config('plugins.enabled.' . basename($plugin)) ?? false;
                 @endphp
-                @if($pluginEnabled)
+                @if($pluginEnabled && !empty($pluginSettings))
                     <div class="tab-pane fade" id="kt_tab_{{ Str::slug($pluginConfig['name']) }}" role="tabpanel">
                         <form class="settings-form" action="{{ route('settings.update') }}" method="POST">
                             @csrf
