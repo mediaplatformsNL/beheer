@@ -48,23 +48,31 @@
                 <label for="city" class="form-label">Plaats</label>
                 <input type="text" class="form-control form-control-sm" id="city" name="city" value="{{ old('city', $requestModel->city) }}">
             </div>
-
-            <!-- Loop door custom_questions -->
-            @if($customQuestionsSettings)
-                @foreach($customQuestionsSettings as $question => $data)
-                <div class="mb-5">
-                    <label class="form-label">{{ $question }}</label>
-                    @if($data['type'] == 'radio')
-                        @foreach($data['answer'] as $option => $value)
-                            <div class="form-check form-check-inline form-check-sm">
-                                <input class="form-check-input" type="radio" name="custom_questions[{{ $question }}]" id="custom_question_{{ $question }}_{{ $option }}" value="{{ $option }}" {{ old('custom_questions.' . $question, $requestModel->custom_questions[$question]['answer']) == $option ? 'checked' : '' }}>
-                                <label class="form-check-label" for="custom_question_{{ $question }}_{{ $option }}">{{ $value }}</label>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+            @foreach($customQuestionsSettings as $questionGroup)
+                @foreach($questionGroup as $type => $questions)
+                    @foreach($questions as $label => $options)
+                        <div class="mb-5">
+                            <label class="form-label">{{ $label }}</label>
+                            @if($type == 'radio')
+                                @foreach($options as $display => $value)
+                                    <div class="form-check form-check-sm mb-2">
+                                        <input class="form-check-input" type="radio" name="custom_questions[{{ $label }}]" id="custom_question_{{ $label }}_{{ $value }}" value="{{ $value }}" {{ old('custom_questions.' . $label, $requestModel->custom_questions[$label]['answer'] ?? '') == $value ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="custom_question_{{ $label }}_{{ $value }}" style="color: #252f4a;">{{ $display }}</label>
+                                    </div>
+                                @endforeach
+                            @elseif($type == 'select')
+                                <select class="form-select form-select-sm" name="custom_questions[{{ $label }}]" id="custom_question_{{ $label }}">
+                                    @foreach($options as $display => $value)
+                                        <option value="{{ $value }}" {{ old('custom_questions.' . $label, $requestModel->custom_questions[$label]['answer'] ?? '') == $value ? 'selected' : '' }}>{{ $display }}</option>
+                                    @endforeach
+                                </select>
+                            @elseif($type == 'textarea')
+                                <textarea class="form-control form-control-sm" name="custom_questions[{{ $label }}]" id="custom_question_{{ $label }}" rows="3">{{ old('custom_questions.' . $label, $requestModel->custom_questions[$label]['answer'] ?? '') }}</textarea>
+                            @endif
+                        </div>
+                    @endforeach
                 @endforeach
-            @endif
+            @endforeach
 
             <div class="mt-7">
                 <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>

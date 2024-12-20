@@ -47,10 +47,13 @@ class RequestsController extends Controller
         $processedQuestions = [];
         if ($request->has('custom_questions')) {
             foreach ($request->custom_questions as $question => $data) {
+                $decodedQuestion = urldecode($question); // Decodeer de vraag
                 foreach ($data as $type => $answer) {
-                    $processedQuestions[$question] = [
-                        'type' => $type,
-                        'answer' => $answer
+                    $decodedType = urldecode($type); // Decodeer het type
+                    $decodedAnswer = urldecode($answer); // Decodeer het antwoord
+                    $processedQuestions[$decodedQuestion] = [
+                        'type' => $decodedType,
+                        'answer' => $decodedAnswer
                     ];
                 }
             }
@@ -79,8 +82,16 @@ class RequestsController extends Controller
 
     public function edit(RequestModel $requestModel) {
         $customQuestionsSetting = Setting::where('name', 'custom_questions')->first();
-        $customQuestionsSettings = $customQuestionsSetting ? json_decode($customQuestionsSetting->value, true) : [];
+        $customQuestionsArray = explode("\n", $customQuestionsSetting->value);
+        $customQuestionsSettings = [];
+        foreach ($customQuestionsArray as $customQuestion) {
+            $decodedQuestion = json_decode($customQuestion, true);
+            if ($decodedQuestion) {
+                $customQuestionsSettings[] = $decodedQuestion;
+            }
+        }
 
+        dd($requestModel);
         return view('requests::edit', compact('requestModel', 'customQuestionsSettings'));
     }
 

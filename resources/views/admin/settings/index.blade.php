@@ -158,7 +158,7 @@
         .then(data => {
             if (data.success) {
                 toastr.success('Instellingen succesvol bijgewerkt.');
-                document.activeElement.blur();
+                //document.activeElement.blur();
             } else {
                 toastr.error('Er is een fout opgetreden bij het opslaan.');
             }
