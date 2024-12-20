@@ -20,7 +20,7 @@
             @csrf
             @method('PUT')
 
-            <div class="mb-3">
+            <div class="mb-5">
                 <label class="form-label">Geslacht</label>
                 <div>
                     <div class="form-check form-check-inline form-check-sm">
@@ -34,22 +34,30 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-5">
                 <label for="name" class="form-label">Naam</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name" value="{{ old('name', $requestModel->name) }}">
             </div>
 
-            <div class="mb-3">
+            <div class="mb-5">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" class="form-control form-control-sm" id="email" name="email" value="{{ old('email', $requestModel->email) }}">
             </div>
 
-            <div class="mb-3">
+            <div class="mb-5">
                 <label for="city" class="form-label">Plaats</label>
                 <input type="text" class="form-control form-control-sm" id="city" name="city" value="{{ old('city', $requestModel->city) }}">
             </div>
 
-            <!-- Voeg hier meer velden toe indien nodig -->
+            <!-- Loop door custom_questions -->
+            @if($customQuestions = json_decode($requestModel->custom_questions, true))
+                @foreach($customQuestions as $question => $answer)
+                    <div class="mb-5">
+                        <label class="form-label">{{ $question }}</label>
+                        <input type="text" class="form-control form-control-sm" name="custom_questions[{{ $question }}]" value="{{ old('custom_questions.' . $question, $answer) }}">
+                    </div>
+                @endforeach
+            @endif
 
             <div class="mt-7">
                 <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
