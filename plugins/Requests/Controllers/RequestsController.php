@@ -47,10 +47,10 @@ class RequestsController extends Controller
         $processedQuestions = [];
         if ($request->has('custom_questions')) {
             foreach ($request->custom_questions as $question => $data) {
-                $decodedQuestion = urldecode($question); // Decodeer de vraag
+                $decodedQuestion = stripslashes(urldecode($question)); // Decodeer en verwijder escape-tekens
                 foreach ($data as $type => $answer) {
-                    $decodedType = urldecode($type); // Decodeer het type
-                    $decodedAnswer = urldecode($answer); // Decodeer het antwoord
+                    $decodedType = stripslashes(urldecode($type)); // Decodeer en verwijder escape-tekens
+                    $decodedAnswer = stripslashes(urldecode($answer)); // Decodeer en verwijder escape-tekens
                     $processedQuestions[$decodedQuestion] = [
                         'type' => $decodedType,
                         'answer' => $decodedAnswer
