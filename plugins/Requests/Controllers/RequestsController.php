@@ -60,7 +60,7 @@ class RequestsController extends Controller
         }
 
         // Zet custom_questions om naar een JSON-string
-        $request->merge(['custom_questions' => json_encode($processedQuestions)]);
+        $request->merge(['custom_questions' => $processedQuestions]);
 
         // Haal het huidige request_number op
         $requestNumberSetting = Setting::where('name', 'request_number')->first();
